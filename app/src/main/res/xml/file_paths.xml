@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Grant access to the app’s files directory -->
+    <files-path name="documents" path="documents/" />
+
+    <!-- Grant access to the external storage directory -->
+    <external-path name="external_files" path="Android/data/com.rudraksha.documentone/files/" />
+
+    <!-- Grant access to the app's cache directory -->
+    <cache-path name="cached_files" path="cache/" />
+
+    <!-- Allow access to the app's specific external storage -->
+    <external-files-path name="external_documents" path="Documents/" />
+</paths>

@@ -16,34 +16,18 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.rudraksha.documentone.data.database.DocumentDatabase
 import com.rudraksha.documentone.data.model.DocumentEntity
 import com.rudraksha.documentone.ui.navigation.AppNavigationBar
+import com.rudraksha.documentone.ui.navigation.AppTopBar
+import com.rudraksha.documentone.ui.navigation.Screen
 import com.rudraksha.documentone.viewmodel.DocumentUiState
 import com.rudraksha.documentone.viewmodel.DocumentViewModel
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
 fun HomeScreen(
-    uiState: DocumentUiState = DocumentUiState.Success(listOf(
-        DocumentEntity(
-            id = 0,
-            "1", "2", "3"
-        ),
-        DocumentEntity(
-            id = 0,
-            "1", "2", "3"
-        ),
-        DocumentEntity(
-            id = 0,
-            "1", "2", "3"
-        ),
-        DocumentEntity(
-            id = 0,
-            "1", "2", "3"
-        ),
-    )),
-    onDocumentSelected: (Int) -> Unit = {},
+    uiState: DocumentUiState = DocumentUiState.Success(listOf()),
+    onDocumentSelected: (DocumentEntity) -> Unit = {},
+    onNavItemClick: (Screen) -> Unit = {},
 ) {
-//    val repository = DocumentRepository(database.documentDao())
 //    val viewModel: DocumentViewModel = viewModel(
 //        factory = DocumentViewModelFactory(repository)
 //    )
@@ -52,12 +36,15 @@ fun HomeScreen(
 
     Scaffold(
         topBar = {
-            CenterAlignedTopAppBar(
-                title = { Text("Documents") },
+            AppTopBar(
+                title = "Documents"
             )
         },
         bottomBar = {
-            AppNavigationBar()
+            AppNavigationBar(
+                onItemClick = onNavItemClick,
+                currentRoute = Screen.Home.toString(),
+            )
         },
         content = { padding ->
             when (uiState) {
@@ -89,7 +76,7 @@ fun HomeScreen(
                                     modifier = Modifier
                                         .fillMaxWidth()
                                         .padding(4.dp)
-                                        .clickable { onDocumentSelected(document.id) },
+                                        .clickable { onDocumentSelected(document) },
                                     elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
                                 ) {
                                     Column(modifier = Modifier.padding(8.dp)) {

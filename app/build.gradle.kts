@@ -2,8 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    // Apply KSP plugin with the correct version.
-    id("com.google.devtools.ksp") version "2.1.10-1.0.29"
+    id("com.google.devtools.ksp") version "2.1.10-1.0.29"// KSP plugin
+    alias(libs.plugins.kotlinx.serialization)// Kotlinx serialization plugin
 }
 
 android {
@@ -22,7 +22,8 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true // Enable ProGuard/R8
+            isShrinkResources = true // Enable resource shrinking
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -55,16 +56,33 @@ dependencies {
     // Room database dependencies
     implementation("androidx.room:room-runtime:2.6.1")
     implementation("androidx.room:room-ktx:2.5.1")
+    implementation(libs.androidx.navigation.compose)
     // Use KSP for Room's annotation processing
     ksp("androidx.room:room-compiler:2.6.1")
+    implementation(libs.kotlinx.serialization.json)
+
+    // Icons
+    implementation(libs.material.icons.extended)
 
     // CameraX for camera capture
     implementation("androidx.camera:camera-camera2:1.4.1")
     implementation("androidx.camera:camera-lifecycle:1.4.1")
     implementation("androidx.camera:camera-view:1.4.1")
 
-    // ML Kit for Text Recognition
-    implementation("com.google.mlkit:text-recognition:16.0.1")
+// ML Kit for Text Recognition (Latin scripts: English, Spanish, etc.)
+    implementation("com.google.mlkit:text-recognition:16.0.0")
+
+// ML Kit for Devanagari Text Recognition (Hindi, Sanskrit, Marathi, etc.)
+    implementation("com.google.mlkit:text-recognition-devanagari:16.0.0")
+
+// ML Kit for Chinese Text Recognition
+//    implementation("com.google.mlkit:text-recognition-chinese:16.0.0")
+
+// ML Kit for Japanese Text Recognition
+//    implementation("com.google.mlkit:text-recognition-japanese:16.0.0")
+
+// ML Kit for Korean Text Recognition
+//    implementation("com.google.mlkit:text-recognition-korean:16.0.0")
 
     // Pdf Viewer
     implementation("androidx.pdf:pdf-viewer:1.0.0-alpha06")
